@@ -18,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LaraCrudController::class, 'index']);
 Route::get('/create', [LaraCrudController::class, 'create']);
 Route::post('/create', [LaraCrudController::class, 'store']);
+Route::get('/show/{id}', [LaraCrudController::class, 'show']);
+Route::get('/edit/{id}', [LaraCrudController::class, 'edit']);
+Route::put('/edit/{id}', [LaraCrudController::class, 'update']);
+Route::delete('/delete/{id}', [LaraCrudController::class, 'destroy']);

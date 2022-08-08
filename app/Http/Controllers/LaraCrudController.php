@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaraCrud;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LaraCrudController extends Controller
@@ -15,7 +16,7 @@ class LaraCrudController extends Controller
     public function index()
     {
         return view('crud', [
-            'crud' => LaraCrud::all()
+            'crud' => LaraCrud::paginate(5)
         ]);
     }
 
@@ -40,7 +41,7 @@ class LaraCrudController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' => 'email|required',
+            'email' => 'required|email',
             'address' => 'required'
         ]);
 
@@ -60,9 +61,13 @@ class LaraCrudController extends Controller
      * @param  \App\Models\LaraCrud  $laraCrud
      * @return \Illuminate\Http\Response
      */
-    public function show(LaraCrud $laraCrud)
+    public function show($id)
     {
         //
+        return view('show', [
+            'crud' => LaraCrud::findOrFail($id),
+            'date' => Carbon::now()->subDays()->diffForHumans()
+        ]);
     }
 
     /**
@@ -71,9 +76,11 @@ class LaraCrudController extends Controller
      * @param  \App\Models\LaraCrud  $laraCrud
      * @return \Illuminate\Http\Response
      */
-    public function edit(LaraCrud $laraCrud)
+    public function edit($id)
     {
-        //
+        return view('edit', [
+            'crud' => LaraCrud::findOrFail($id)
+        ]);
     }
 
     /**
@@ -83,9 +90,24 @@ class LaraCrudController extends Controller
      * @param  \App\Models\LaraCrud  $laraCrud
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LaraCrud $laraCrud)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email',
+            'address' => 'required'
+        ]);
+
+        $laraCrud = LaraCrud::findOrFail($id);
+        $laraCrud->firstname = $request['firstname'];
+        $laraCrud->lastname = $request['lastname'];
+        $laraCrud->email = $request['email'];
+        $laraCrud->address = $request['address'];
+
+        $laraCrud->save();
+
+        return redirect("/show/$id")->with('updated', 'Record Updated');
     }
 
     /**
@@ -94,8 +116,11 @@ class LaraCrudController extends Controller
      * @param  \App\Models\LaraCrud  $laraCrud
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LaraCrud $laraCrud)
+    public function destroy($id)
     {
-        //
+        $laraCrud = LaraCrud::findOrFail($id);
+        $laraCrud->delete();
+
+        return redirect('/')->with('delete', 'Record Deleted');
     }
 }

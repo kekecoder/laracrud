@@ -9,7 +9,11 @@
 </head>
 <body>
     <div class="container-fluid mt-4">
-        @yield('content')
+       <div class="row">
+           <div class="col-sm">
+            @yield('content')
+           </div>
+       </div>
     </div>
 </body>
 </html>

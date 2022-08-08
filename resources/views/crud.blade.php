@@ -6,6 +6,11 @@
          {{ session('success') }}
       </div>
    @endif
+   @if (session('delete'))
+      <div class="alert alert-danger">
+         {{ session('delete') }}
+      </div>
+   @endif
    <a href="/create" class="btn btn-secondary mb-4">
       Create
    </a>
@@ -15,9 +20,7 @@
          <th scope="col">Firstname</th>
          <th scope="col">Lastname</th>
          <th scope="col">Email</th>
-         <th scope="col">Address</th>
-         <th scope="col">Date</th>
-         <th scope="col"></th>
+         <th scope="col">Action</th>
       </tr>
       @foreach ($crud as $i => $app)
       <tr>
@@ -25,13 +28,11 @@
          <td>{{ $app['firstname'] }}</td>
          <td>{{ $app['lastname'] }}</td>
          <td>{{ $app['email'] }}</td>
-         <td>{{ $app['address'] }}</td>
-         <td>{{ $app['created_at'] }}</td>
-         <td>
-            <button class="btn btn-primary d-inline">Edit</button>
-            <button class="btn btn-danger d-inline">Delete</button>
-         </td>
+         <td><a href="/show/{{ $app['id'] }}" class="btn btn-primary">View</a></td>
       </tr>
       @endforeach
    </table>
+   <div class="d-flex justify-content-end">
+      {{ $crud->links() }}
+   </div>
 @endsection
