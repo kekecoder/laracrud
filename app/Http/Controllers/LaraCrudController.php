@@ -16,7 +16,7 @@ class LaraCrudController extends Controller
     public function index()
     {
         return view('crud', [
-            'crud' => LaraCrud::paginate(5)
+            'crud' => LaraCrud::latest()->paginate(5)
         ]);
     }
 
@@ -63,10 +63,10 @@ class LaraCrudController extends Controller
      */
     public function show($id)
     {
-        //
+        $date = new Carbon('Africa/Lagos');
         return view('show', [
             'crud' => LaraCrud::findOrFail($id),
-            'date' => Carbon::now()->subDays()->diffForHumans()
+            'date' => $date->subDays($id)->diffForHumans()
         ]);
     }
 
