@@ -27,7 +27,7 @@
          <th scope="row">{{ $i + 1 }}</th>
          <td>{{ $app['firstname'] }}</td>
          <td>{{ $app['lastname'] }}</td>
-         <td>{{ $app['email'] }}</td>
+         <td><a href="mailto:{{ $app['email'] }}">{{ $app['email'] }}</a></td>
          <td><a href="/show/{{ $app['id'] }}" class="btn btn-primary">View</a></td>
       </tr>
       @endforeach
