@@ -63,10 +63,8 @@ class LaraCrudController extends Controller
      */
     public function show($id)
     {
-        $date = new Carbon('Africa/Lagos');
         return view('show', [
             'crud' => LaraCrud::findOrFail($id),
-            'date' => $date->subDays($id)->diffForHumans()
         ]);
     }
 

@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="card-footer text-muted">
-             {{ $date }}
+             {{ $crud->created_at->diffForHumans() }}
         </div>
     </div>
 @endsection
